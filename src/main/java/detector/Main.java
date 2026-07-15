@@ -18,7 +18,8 @@ public class Main {
         }
 
         List<DetectorPadrao> detectores = List.of(
-                new DetectorSingleton()
+                new DetectorSingleton(),
+                new DetectorObserver()
                 // próximos detectores entram aqui (Parte 4 e 5)
         );
 
