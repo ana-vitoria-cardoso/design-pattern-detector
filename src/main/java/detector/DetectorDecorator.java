@@ -17,7 +17,7 @@ public class DetectorDecorator implements DetectorPadrao {
     public Optional<PadraoDetectado> detectar(ClassOrInterfaceDeclaration classe) {
         String nomeClasse = classe.getNameAsString();
 
-        // (a) a classe implementa pelo menos uma interface
+        //a classe implementa pelo menos uma interface
         List<ClassOrInterfaceType> interfacesImplementadas = classe.getImplementedTypes();
         if (interfacesImplementadas.isEmpty()) {
             return Optional.empty();
@@ -26,7 +26,7 @@ public class DetectorDecorator implements DetectorPadrao {
         for (ClassOrInterfaceType interfaceImplementada : interfacesImplementadas) {
             String nomeInterface = interfaceImplementada.getNameAsString();
 
-            // (b) campo do mesmo tipo da interface implementada
+            //campo do mesmo tipo da interface implementada
             Optional<FieldDeclaration> campoMesmoTipo = classe.getFields().stream()
                     .filter(f -> f.getVariable(0).getTypeAsString().equals(nomeInterface))
                     .findFirst();
@@ -38,7 +38,7 @@ public class DetectorDecorator implements DetectorPadrao {
             VariableDeclarator variavel = campoMesmoTipo.get().getVariable(0);
             String nomeCampo = variavel.getNameAsString();
 
-            // (c) o campo é recebido via construtor (parâmetro com o mesmo tipo, atribuído ao campo)
+            //o campo é recebido via construtor
             boolean recebidoNoConstrutor = classe.getConstructors().stream()
                     .anyMatch(ctor -> construtorAtribuiParametro(ctor, nomeInterface, nomeCampo));
 
@@ -46,7 +46,7 @@ public class DetectorDecorator implements DetectorPadrao {
                 continue;
             }
 
-            // (d) algum método delega chamada para o campo
+            //algum método manda chamada para o campo
             Optional<MethodDeclaration> metodoDelegador = classe.getMethods().stream()
                     .filter(m -> delegaParaCampo(m, nomeCampo))
                     .findFirst();

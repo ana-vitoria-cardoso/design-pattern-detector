@@ -21,7 +21,6 @@ public class Main {
                 new DetectorSingleton(),
                 new DetectorObserver(),
                 new DetectorDecorator()
-                // próximos detectores entram aqui (Parte 4 e 5)
         );
 
         File arquivo = new File(args[0]);
@@ -40,7 +39,7 @@ public class Main {
         }
 
         if (!algumDetectado) {
-            System.out.println("Nenhum padrão de projeto foi detectado neste arquivo.");
+            System.out.println("Nenhum padrão de projeto encontrado.");
         }
     }
 }
